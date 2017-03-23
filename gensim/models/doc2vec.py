@@ -55,7 +55,7 @@ from timeit import default_timer
 
 from numpy import zeros, random, sum as np_sum, add as np_add, concatenate, \
     repeat as np_repeat, array, float32 as REAL, empty, ones, memmap as np_memmap, \
-    sqrt, newaxis, ndarray, dot, vstack, dtype, divide as np_divide
+    sqrt, newaxis, ndarray, dot, vstack, dtype, divide as np_divide, integer
 
 
 from gensim.utils import call_on_class_only
@@ -346,7 +346,7 @@ class DocvecsArray(utils.SaveLoad):
         If a list, return designated tags' vector representations as a
         2D numpy array: #tags x #vector_size.
         """
-        if isinstance(index, string_types + (int,)):
+        if isinstance(index, string_types + (int,) + (integer,)):
             return self.doctag_syn0[self._int_index(index)]
 
         return vstack([self[i] for i in index])
