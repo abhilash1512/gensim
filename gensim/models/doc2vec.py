@@ -330,17 +330,17 @@ class DocvecsArray(utils.SaveLoad):
     def __getitem__(self, index):
         """
         Accept a single key (int or string tag) or list of keys as input.
-
         If a single string or int, return designated tag's vector
         representation, as a 1D numpy array.
-
         If a list, return designated tags' vector representations as a
         2D numpy array: #tags x #vector_size.
         """
         if isinstance(index, string_types + (int,)):
             return self.doctag_syn0[self._int_index(index)]
-
-        return vstack([self[i] for i in index])
+        elif isinstance(index, (list, np.ndarray)):
+            return vstack([self.doctag_syn0[self._int_index(i)] for i in index])
+        else:
+            raise ValueError("invalid format: input fed is not a string, integer or an array/list")
 
     def __len__(self):
         return self.count
